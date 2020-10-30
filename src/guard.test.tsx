@@ -13,7 +13,7 @@ describe("FlagGuard", () => {
   it("throws an error if used outside of FlagProvider", () => {
     // Spy console to avoid jsdom warning on uncaught error
     const spy = jest.spyOn(console, "error");
-    spy.mockImplementation(() => {});
+    spy.mockImplementation();
 
     const wrapperWithoutContext = (
       <FlagGuard flag="someFlag">
