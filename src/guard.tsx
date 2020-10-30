@@ -6,7 +6,11 @@ interface FlagGuardProps {
 }
 
 const FlagGuard: React.FC<FlagGuardProps> = ({ flag, children }) => {
-  const { checkFlag, user } = React.useContext(FlagContext);
+  const context = React.useContext(FlagContext);
+  if (context === undefined) {
+    throw new Error("FlagGuard must be used within a FlagProvider");
+  }
+  const { checkFlag, user } = context;
   const checkedFlag = React.useMemo(() => checkFlag(flag, user), [
     flag,
     user,
