@@ -1,7 +1,7 @@
 {
   "name": "flagpole",
   "version": "1.0.0",
-  "author": "Tomas",
+  "author": "Tomas Caraccia",
   "license": "MIT",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
@@ -11,7 +11,15 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test":"jest"
+    "test": "cross-env CI=true jest --env=jsdom",
+    "format": "prettier -w src",
+    "lint": "eslint --fix src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn format && yarn test",
+      "pre-push": "yarn lint && yarn format && yarn test"
+    }
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
@@ -23,12 +31,14 @@
     "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "fork-ts-checker-webpack-plugin": "^5.2.1",
+    "husky": "^4.3.0",
     "jest": "^26.6.1",
     "prettier": "^2.1.2",
     "react": "^17.0.1",

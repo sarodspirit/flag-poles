@@ -1,34 +1,26 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { FlagSwitch } from "./switch";
+import FlagSwitch from "./switch";
 import { FlagProvider } from "./context";
-const wrapper = ({ flag, providerValue, children }) => (
+const wrapper = ({ flag, providerValue, options }) => (
   <FlagProvider value={providerValue}>
-    <FlagSwitch flag={flag}>{children}</FlagSwitch>
+    <FlagSwitch flag={flag}>
+      <FlagSwitch.On>
+        <div>{options.on}</div>
+      </FlagSwitch.On>
+      <FlagSwitch.Off>
+        <div>{options.off}</div>
+      </FlagSwitch.Off>
+    </FlagSwitch>
   </FlagProvider>
 );
-describe("Switch", () => {
-  it("throws an error if used outside of FlagProvider", () => {
-    // Spy console to avoid jsdom warning on uncaught error
-    const spy = jest.spyOn(console, "error");
-    spy.mockImplementation();
-
-    const wrapperWithoutContext = (
-      <FlagSwitch flag="someFlag">
-        <div>Im a flagpole</div>
-      </FlagSwitch>
-    );
-    expect(() => render(wrapperWithoutContext)).toThrowError(
-      "FlagSwitch needs to be used within a FlagProvider"
-    );
-    spy.mockRestore();
-  });
-
+describe("FlagSwitch", () => {
   it.each([
+    ["FlagSwitch", () => <FlagSwitch flag="someFlag"></FlagSwitch>],
     ["FlagSwitch.On", () => <FlagSwitch.On></FlagSwitch.On>],
     ["FlagSwitch.Off", () => <FlagSwitch.Off></FlagSwitch.Off>],
   ])(
-    "throws an error if %s used outside of FlagSwitch context",
+    "throws an error if %s used outside of FlagProvider",
     (name, component) => {
       const spy = jest.spyOn(console, "error");
       spy.mockImplementation();
@@ -38,4 +30,29 @@ describe("Switch", () => {
       spy.mockRestore();
     }
   );
+  it.each([
+    [
+      "shows On",
+      "enabled: true",
+      { no_render: { enabled: true } },
+      "Rock On",
+      null,
+    ],
+    [
+      "shows Off",
+      "enabled: false",
+      { no_render: { enabled: false } },
+      null,
+      "Rock Off",
+    ],
+  ])("%s on Branch if render is %s", (_, __, user, on, off) => {
+    render(
+      wrapper({
+        flag: "no_render",
+        providerValue: { user },
+        options: { on, off },
+      })
+    );
+    expect(screen.queryByText(on || off).textContent).toEqual(on || off);
+  });
 });

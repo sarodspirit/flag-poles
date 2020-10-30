@@ -1,3 +1,5 @@
 import { FlagProvider } from "./context";
 import FlagGuard from "./guard";
-export default { FlagGuard, FlagProvider };
+import FlagSwitch from "./switch";
+
+export default { FlagGuard, FlagProvider, FlagSwitch };

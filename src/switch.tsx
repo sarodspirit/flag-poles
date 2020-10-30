@@ -26,9 +26,7 @@ const FlagSwitch: React.FC & FlagSwitchComposition = ({
     checkFlag,
   ]);
   return (
-    <FlagSwitchContext.Provider
-      value={{ flag, status: checkedFlag.enabled, on: checkedFlag.value }}
-    >
+    <FlagSwitchContext.Provider value={{ flag, on: checkedFlag }}>
       {children}
     </FlagSwitchContext.Provider>
   );
@@ -40,7 +38,7 @@ const On: React.FC = ({ children }) => {
     throw new Error("FlagSwitch.On needs to be used within a FlagProvider");
   }
   const { on } = context;
-  return on ? { children } : null;
+  return on ? children : null;
 };
 const Off: React.FC = ({ children }) => {
   const context = React.useContext(FlagSwitchContext);
@@ -48,9 +46,9 @@ const Off: React.FC = ({ children }) => {
     throw new Error("FlagSwitch.Off needs to be used within a FlagProvider");
   }
   const { on } = context;
-  return on ? null : { children };
+  return on ? null : children;
 };
 
 FlagSwitch.On = On;
 FlagSwitch.Off = Off;
-export { FlagSwitch };
+export default FlagSwitch;
