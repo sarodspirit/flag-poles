@@ -1,0 +1,33 @@
+{
+  "projectName": "downshift",
+  "projectOwner": "downshift-js",
+  "repoType": "github",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "sarodspirit",
+      "name": "Tomas Caraccia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64477810?v=3",
+      "profile": "https://www.linkedin.com/in/tomascaraccia/",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "test",
+        "review",
+        "blog",
+        "bug",
+        "example",
+        "ideas",
+        "talk"
+      ]
+    }
+  ],
+  "repoHost": "https://github.com",
+  "contributorsPerLine": 7,
+  "skipCi": true
+}
