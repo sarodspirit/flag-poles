@@ -45,7 +45,7 @@ describe("FlagSwitch", () => {
       null,
       "Rock Off",
     ],
-  ])("%s on Branch if render is %s", (_, __, user, on, off) => {
+  ])("%s branch if render is %s", (_, __, user, on, off) => {
     render(
       wrapper({
         flag: "no_render",

@@ -20,9 +20,9 @@ describe("FlagGuard", () => {
         <div>Im a flagpole</div>
       </FlagGuard>
     );
-    expect(() => render(wrapperWithoutContext)).toThrowError(
-      "FlagGuard must be used within a FlagProvider"
-    );
+    expect(() => {
+      render(wrapperWithoutContext);
+    }).toThrowError("FlagGuard must be used within a FlagProvider");
     spy.mockRestore();
   });
 

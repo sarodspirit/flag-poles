@@ -1,17 +1,17 @@
 import * as React from "react";
+import { Flag } from "./typings";
 
+interface FlagProviderProps {
+  value: Record<string, Partial<Flag>>;
+  children?: React.Node;
+}
 const defaultOptions = {
   user: {},
-  checkFlag: (flag: string, user: any) => user[flag]?.enabled,
+  checkFlag: (flagId: string, flagMap: Record<string, Partial<Flag>>) =>
+    flagMap[flagId]?.enabled,
 };
 export const FlagContext = React.createContext();
-export const FlagProvider: React.FC = ({
-  children,
-  value,
-}: {
-  value?: any;
-  children?: React.Node;
-}) => {
+export const FlagProvider = ({ children, value }: FlagProviderProps) => {
   return (
     <FlagContext.Provider value={{ ...defaultOptions, ...value }}>
       {children}
