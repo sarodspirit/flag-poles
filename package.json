@@ -17,8 +17,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn format && yarn test",
-      "pre-push": "yarn lint && yarn format && yarn test"
+      "pre-commit": "yarn lint && yarn format",
+      "pre-push": "yarn test"
     }
   },
   "devDependencies": {
@@ -31,6 +31,7 @@
     "@types/testing-library__react": "^10.2.0",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
+    "all-contributors-cli": "^6.19.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
