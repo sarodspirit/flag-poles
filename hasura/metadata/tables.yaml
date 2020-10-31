@@ -1,6 +1,0 @@
-- table:
-    schema: public
-    name: companies
-- table:
-    schema: public
-    name: flags
