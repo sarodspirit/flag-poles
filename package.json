@@ -1,6 +1,6 @@
 {
   "name": "flag-poles",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Tomas Caraccia",
   "license": "MIT",
   "main": "./build/index.js",
