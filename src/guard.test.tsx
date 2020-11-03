@@ -30,13 +30,15 @@ describe("FlagGuard", () => {
     ["hides", "enabled: false", { no_render: { enabled: false } }, null],
     ["hides", "undefined", {}, null],
     ["shows", "enabled: true", { no_render: { enabled: true } }, true],
-  ])("%s a child component when flag is %s", (_, __, user, result) => {
-    render(wrapper({ flag: "no_render", providerValue: { user } }));
+  ])("%s a child component when flag is %s", (_, __, flagMap, result) => {
+    render(wrapper({ flag: "no_render", providerValue: { flagMap } }));
     if (!result) {
       return expect(screen.queryByText("Im a flagpole")).toBeFalsy();
     }
-    return expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(
-      `null`
-    );
+    return expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(`
+              <div>
+                Im a flagpole
+              </div>
+            `);
   });
 });
