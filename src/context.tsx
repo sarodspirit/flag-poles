@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Flag } from "./typings";
 
-interface FlagProviderProps {
+export interface FlagProviderProps {
   value: Record<string, Partial<Flag>>;
-  children?: React.Node;
+  children?;
 }
 const defaultOptions = {
   user: {},
