@@ -45,11 +45,11 @@ describe("FlagSwitch", () => {
       null,
       "Rock Off",
     ],
-  ])("%s branch if render is %s", (_, __, user, on, off) => {
+  ])("%s branch if render is %s", (_, __, flagMap, on, off) => {
     render(
       wrapper({
         flag: "no_render",
-        providerValue: { user },
+        providerValue: { flagMap },
         options: { on, off },
       })
     );

@@ -10,10 +10,10 @@ const FlagGuard: React.FC<FlagGuardProps> = ({ flag, children }) => {
   if (context === undefined) {
     throw new Error("FlagGuard must be used within a FlagProvider");
   }
-  const { checkFlag, user } = context;
-  const checkedFlag = React.useMemo(() => checkFlag(flag, user), [
+  const { checkFlag, flagMap } = context;
+  const checkedFlag = React.useMemo(() => checkFlag(flag, flagMap), [
     flag,
-    user,
+    flagMap,
     checkFlag,
   ]);
   if (checkedFlag) {

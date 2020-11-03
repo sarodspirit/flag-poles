@@ -6,8 +6,8 @@
   "main": "./build/index.js",
   "module": "./build/index.es.js",
   "peerDependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   },
   "scripts": {
     "build": "rollup -c",
@@ -26,6 +26,7 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.6",
     "@types/testing-library__react": "^10.2.0",
@@ -44,6 +45,7 @@
     "prettier": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
     "rollup": "^2.33.1",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-filesize": "^9.0.2",

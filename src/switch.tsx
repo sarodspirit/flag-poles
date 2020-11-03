@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { FlagContext } from "./context";
 
 interface FlagSwitchComposition {
@@ -7,11 +7,13 @@ interface FlagSwitchComposition {
 }
 interface FlagSwitchProps {
   flag: string;
-  children: React.ReactNode;
+  children?: ReactNode;
 }
-const FlagSwitchContext = React.createContext();
+const FlagSwitchContext = React.createContext<
+  { on: boolean; flag: string } | undefined
+>(undefined);
 
-const FlagSwitch: React.FC & FlagSwitchComposition = ({
+const FlagSwitch: React.FC<FlagSwitchProps> & FlagSwitchComposition = ({
   flag,
   children,
 }: FlagSwitchProps) => {
@@ -19,10 +21,10 @@ const FlagSwitch: React.FC & FlagSwitchComposition = ({
   if (context === undefined) {
     throw new Error("FlagSwitch needs to be used within a FlagProvider");
   }
-  const { checkFlag, user } = context;
-  const checkedFlag = React.useMemo(() => checkFlag(flag, user), [
+  const { checkFlag, flagMap } = context;
+  const checkedFlag = React.useMemo(() => checkFlag(flag, flagMap), [
     flag,
-    user,
+    flagMap,
     checkFlag,
   ]);
   return (
@@ -32,7 +34,7 @@ const FlagSwitch: React.FC & FlagSwitchComposition = ({
   );
 };
 
-const On: React.FC = ({ children }) => {
+const On = ({ children }) => {
   const context = React.useContext(FlagSwitchContext);
   if (context === undefined) {
     throw new Error("FlagSwitch.On needs to be used within a FlagProvider");
@@ -40,7 +42,7 @@ const On: React.FC = ({ children }) => {
   const { on } = context;
   return on ? children : null;
 };
-const Off: React.FC = ({ children }) => {
+const Off = ({ children }) => {
   const context = React.useContext(FlagSwitchContext);
   if (context === undefined) {
     throw new Error("FlagSwitch.Off needs to be used within a FlagProvider");
