@@ -35,10 +35,8 @@ describe("FlagGuard", () => {
     if (!result) {
       return expect(screen.queryByText("Im a flagpole")).toBeFalsy();
     }
-    return expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(`
-              <div>
-                Im a flagpole
-              </div>
-            `);
+    return expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(
+      `null`
+    );
   });
 });
