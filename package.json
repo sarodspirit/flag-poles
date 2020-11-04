@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "rollup -c && tsc",
-    "test": "cross-env CI=true jest --env=jsdom --coverage --no-cache --verbose --detectOpenHandles",
+    "test": "cross-env CI=true jest --env=jsdom --coverage --no-cache --verbose",
     "format": "prettier -w src",
     "lint": "eslint --fix src",
     "prepublish": "yarn build"
