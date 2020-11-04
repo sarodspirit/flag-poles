@@ -1,20 +1,25 @@
 {
   "name": "flag-poles",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Tomas Caraccia",
   "license": "MIT",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
-  "module": "./build/index.es.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "peerDependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && tsc",
     "test": "cross-env CI=true jest --env=jsdom --coverage --no-cache --verbose",
     "format": "prettier -w src",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix src",
+    "prepublish": "yarn build"
   },
   "husky": {
     "hooks": {
@@ -47,7 +52,7 @@
     "prettier": "^2.1.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-test-renderer": "17.0.1",
+    "react-test-renderer": "^17.0.1",
     "rollup": "^2.33.1",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-filesize": "^9.0.2",
