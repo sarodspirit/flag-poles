@@ -3,7 +3,7 @@ const useInterval = (callback: () => void, delay: number | null): void => {
   const savedCallBack = React.useRef<() => void | null>();
   React.useEffect(() => {
     savedCallBack.current = callback;
-  }, [savedCallBack]);
+  }, [savedCallBack, callback]);
   React.useEffect(() => {
     const handler = () => savedCallBack?.current();
     if (delay !== null) {

@@ -1,23 +1,37 @@
 {
-  "name": "flagpole",
-  "version": "1.0.0",
+  "name": "flag-poles",
+  "version": "1.0.1",
   "author": "Tomas Caraccia",
   "license": "MIT",
-  "main": "./build/index.js",
-  "module": "./build/index.es.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "peerDependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
   "scripts": {
-    "build": "rollup -c",
-    "test": "cross-env CI=true jest --env=jsdom --coverage --no-cache --verbose",
+    "build": "rollup -c && tsc",
+    "test": "cross-env CI=true jest --env=jsdom --coverage  --verbose --detectOpenHandles --forceExit",
     "format": "prettier -w src",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix src",
+    "prepublish": "yarn build"
   },
+  "keywords": [
+    "npm",
+    "react",
+    "hooks",
+    "context",
+    "features",
+    "flags"
+  ],
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn format",
+      "pre-commit": "yarn lint && pretty-quick --staged",
       "pre-push": "yarn test"
     }
   },
@@ -39,12 +53,14 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "fork-ts-checker-webpack-plugin": "^5.2.1",
     "husky": "^4.3.0",
     "jest": "^26.6.1",
     "prettier": "^2.1.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "pretty-quick": "^3.1.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-test-renderer": "^17.0.1",
     "rollup": "^2.33.1",
     "rollup-plugin-cleanup": "^3.2.1",

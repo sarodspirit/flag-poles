@@ -11,8 +11,8 @@ describe("useInterval", () => {
   it("calls callback with delay", () => {
     const callback = jest.fn();
     renderHook(() => useInterval(callback, 1000));
-    jest.runOnlyPendingTimers();
-    expect(callback).toBeCalled();
+    jest.advanceTimersByTime(1000);
+    expect(callback).toHaveBeenCalled();
     expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 1000);
   });
 });

@@ -1,5 +1,5 @@
 <h1 align="center">
-  flagpole⛳ 
+  flagpoles ⛳ 
 </h1>
 <p align="center" style="font-size: 1.2rem;">Build fast and simple feature flags to integrate seamlessly into your react components</p>
 <hr />
@@ -9,7 +9,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs] 
 [![Code of Conduct][coc-badge]][coc]
-
 [![Supports React][react-badge]][react]
 
 ## The problem
@@ -25,9 +24,6 @@ The second solution is a compound component which offers on/off branches in case
 you want to show custom content if the feature flag is disabled.
 
 
-
-> NOTE: The original use case of this component is autocomplete, however the API
-> is powerful and flexible enough to build things like dropdowns as well.
 
 ## Table of Contents
 
@@ -62,19 +58,28 @@ npm install --save flagpole
 ```jsx
 import * as React from 'react'
 import {render} from 'react-dom'
-import {FlagProvider, FlagGuard} from 'flagpole'
+import {FlagProvider, FlagGuard, FlagSwitch} from 'flagpole'
 
 const FlagMap={
-    '#dont_render_me':{ enabled:false}
+    'my_flag':{ enabled:false},
+    'my_flag_switch':{enabled:true}
 }
 
 render(
   <FlagProvider value={FlagMap}>
     <div>You can see mee</div>
-    <FlagGuard flag="#dont_rende_me">
+    <FlagGuard flag="my_flag">
         <div>I shall not be rendered</div>
     </FlagGuard>
-    <div>You can see me too</div>
+    <FlagSwitch flag="my_flag_switch">
+      <FlagSwitch.On>
+        <div> Im a on switch</div>
+      </FlagSwitch.On>
+      <FlagSwitch.Off>
+        <div> This will render if flag is off</div>
+      </FlagSwitch.Off>
+    </FlagSwitch>
+    <div>You should see mee</div>
   </FlagProvider>,
   document.getElementById('root'),
 )
