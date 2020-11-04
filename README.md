@@ -62,19 +62,28 @@ npm install --save flagpole
 ```jsx
 import * as React from 'react'
 import {render} from 'react-dom'
-import {FlagProvider, FlagGuard} from 'flagpole'
+import {FlagProvider, FlagGuard, FlagSwitch} from 'flagpole'
 
 const FlagMap={
-    '#dont_render_me':{ enabled:false}
+    'my_flag':{ enabled:false},
+    'my_flag_switch':{enabled:true}
 }
 
 render(
   <FlagProvider value={FlagMap}>
     <div>You can see mee</div>
-    <FlagGuard flag="#dont_rende_me">
+    <FlagGuard flag="my_flag">
         <div>I shall not be rendered</div>
     </FlagGuard>
-    <div>You can see me too</div>
+    <FlagSwitch flag="my_flag_switch">
+      <FlagSwitch.On>
+        <div> Im a on switch</div>
+      </FlagSwitch.On>
+      <FlagSwitch.Off>
+        <div> This will render if flag is off</div>
+      </FlagSwitch.Off>
+    </FlagSwitch>
+    <div>You should see mee</div>
   </FlagProvider>,
   document.getElementById('root'),
 )

@@ -21,6 +21,14 @@
     "lint": "eslint --fix src",
     "prepublish": "yarn build"
   },
+  "keywords": [
+    "npm",
+    "react",
+    "hooks",
+    "context",
+    "features",
+    "flags"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint && yarn format",
