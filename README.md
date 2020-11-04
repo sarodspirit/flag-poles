@@ -1,5 +1,5 @@
 <h1 align="center">
-  flagpole⛳ 
+  flagpoles ⛳ 
 </h1>
 <p align="center" style="font-size: 1.2rem;">Build fast and simple feature flags to integrate seamlessly into your react components</p>
 <hr />
@@ -9,7 +9,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs] 
 [![Code of Conduct][coc-badge]][coc]
-
 [![Supports React][react-badge]][react]
 
 ## The problem
@@ -25,9 +24,6 @@ The second solution is a compound component which offers on/off branches in case
 you want to show custom content if the feature flag is disabled.
 
 
-
-> NOTE: The original use case of this component is autocomplete, however the API
-> is powerful and flexible enough to build things like dropdowns as well.
 
 ## Table of Contents
 
