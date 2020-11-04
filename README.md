@@ -4,14 +4,13 @@
 <p align="center" style="font-size: 1.2rem;">Build fast and simple feature flags to integrate seamlessly into your react components</p>
 <hr />
 
-
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs] 
+[![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 [![Supports React][react-badge]][react]
 
 ## The problem
+
 You need feature flags, to show or hide certain parts of your application and
 you want it to be easy. You also don' want to pay a lot of money for this.
 
@@ -23,13 +22,10 @@ which you can use to wrap your component passing a simple identifier attribute.
 The second solution is a compound component which offers on/off branches in case
 you want to show custom content if the feature flag is disabled.
 
-
-
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -44,32 +40,33 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 should be installed as one of your project's `dependencies`:
 
 ```
-npm install --save flagpole
+npm install --save flagpoles
+# or with yarn
+yarn add flagpoles
 ```
 
 > This package also depends on `react`. Please make sure you have it installed
 > as well.
-
 
 ## Usage
 
 > [Try it out in the browser][code-sandbox-try-it-out]
 
 ```jsx
-import * as React from 'react'
-import {render} from 'react-dom'
-import {FlagProvider, FlagGuard, FlagSwitch} from 'flagpole'
+import * as React from "react";
+import { render } from "react-dom";
+import { FlagProvider, FlagGuard, FlagSwitch } from "flagpoles";
 
-const FlagMap={
-    'my_flag':{ enabled:false},
-    'my_flag_switch':{enabled:true}
-}
+const FlagMap = {
+  my_flag: { enabled: false },
+  my_flag_switch: { enabled: true },
+};
 
 render(
   <FlagProvider value={FlagMap}>
     <div>You can see mee</div>
     <FlagGuard flag="my_flag">
-        <div>I shall not be rendered</div>
+      <div>I shall not be rendered</div>
     </FlagGuard>
     <FlagSwitch flag="my_flag_switch">
       <FlagSwitch.On>
@@ -81,9 +78,10 @@ render(
     </FlagSwitch>
     <div>You should see mee</div>
   </FlagProvider>,
-  document.getElementById('root'),
-)
+  document.getElementById("root")
+);
 ```
+
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
@@ -111,12 +109,13 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[prs-badge]:https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[coc-badge]:https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/sarodspirit/flagpole/blob/master/CODE_OF_CONDUCT.md
-[react-badge]:https://img.shields.io/badge/%E2%9A%9B%EF%B8%8F-(p)react-00d8ff.svg?style=flat-square
+[react-badge]: https://img.shields.io/badge/%E2%9A%9B%EF%B8%8F-(p)react-00d8ff.svg?style=flat-square
 [react]: https://facebook.github.io/react/
 [semver]: http://semver.org/
+[code-sandbox-try-it-out]: https://codesandbox.io/s/flag-poles-22icb?file=/src/App.js
