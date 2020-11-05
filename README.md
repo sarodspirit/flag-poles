@@ -57,13 +57,15 @@ import * as React from "react";
 import { render } from "react-dom";
 import { FlagProvider, FlagGuard, FlagSwitch } from "flag-poles";
 
-const FlagMap = {
-  my_flag: { enabled: false },
-  my_flag_switch: { enabled: true },
+const options = {
+  flagMap: {
+    my_flag: { enabled: false },
+    my_flag_switch: { enabled: true },
+  },
 };
 
 render(
-  <FlagProvider value={FlagMap}>
+  <FlagProvider value={options}>
     <div>You can see mee</div>
     <FlagGuard flag="my_flag">
       <div>I shall not be rendered</div>
@@ -76,7 +78,7 @@ render(
         <div> This will render if flag is off</div>
       </FlagSwitch.Off>
     </FlagSwitch>
-    <div>You should see mee</div>
+    <div>You should see me too</div>
   </FlagProvider>,
   document.getElementById("root")
 );
