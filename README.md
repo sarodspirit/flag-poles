@@ -1,5 +1,5 @@
 <h1 align="center">
-  flagpoles ⛳ 
+  flag-poles ⛳ 
 </h1>
 <p align="center" style="font-size: 1.2rem;">Build fast and simple feature flags to integrate seamlessly into your react components</p>
 <hr />
@@ -40,9 +40,9 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 should be installed as one of your project's `dependencies`:
 
 ```
-npm install --save flagpoles
+npm install --save flag-poles
 # or with yarn
-yarn add flagpoles
+yarn add flag-poles
 ```
 
 > This package also depends on `react`. Please make sure you have it installed
@@ -55,7 +55,7 @@ yarn add flagpoles
 ```jsx
 import * as React from "react";
 import { render } from "react-dom";
-import { FlagProvider, FlagGuard, FlagSwitch } from "flagpoles";
+import { FlagProvider, FlagGuard, FlagSwitch } from "flag-poles";
 
 const FlagMap = {
   my_flag: { enabled: false },
