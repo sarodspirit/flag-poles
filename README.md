@@ -84,6 +84,27 @@ render(
 );
 ```
 
+## Render Function
+
+So the case might be you're not just expecting to render flags only based on enabled:true/false but
+probably need a slightly more complex logic.
+To accomplish this you can override default checkFlag function by:
+
+```jsx
+import * as React from "react";
+import { render } from "react-dom";
+import { FlagProvider, FlagGuard, FlagSwitch } from "flag-poles";
+
+const customLogicFunction = ()=>true
+
+const options = {
+  flagMap: {
+    flag1: {enabled:true}
+  },
+  // This function will apply to all flags.
+  checkFlag:(flag, flagMap)=>flagMap[flag].enabled && customLogicFunction()
+}
+
 ## Contributors
 
 Thanks goes to these people ([emoji key][emojis]):
@@ -121,3 +142,4 @@ MIT
 [react]: https://facebook.github.io/react/
 [semver]: http://semver.org/
 [code-sandbox-try-it-out]: https://codesandbox.io/s/flag-poles-22icb?file=/src/App.js
+```
