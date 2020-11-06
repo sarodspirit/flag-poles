@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FlagGuard from "./guard";
-import { FlagProvider } from "./context";
+import { FlagGuard, FlagProvider } from "../flag-poles";
 const wrapper = ({ flag, providerValue }) => (
   <FlagProvider value={providerValue}>
     <FlagGuard flag={flag}>

@@ -9,3 +9,4 @@ export interface Flag {
   expires: string;
   selectors: any;
 }
+export type FlagMap = Record<string, Partial<Flag>>;

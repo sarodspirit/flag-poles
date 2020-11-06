@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FlagSwitch from "./switch";
-import { FlagProvider } from "./context";
+import { FlagSwitch, FlagProvider } from "../flag-poles";
 const wrapper = ({ flag, providerValue, options }) => (
   <FlagProvider value={providerValue}>
     <FlagSwitch flag={flag}>

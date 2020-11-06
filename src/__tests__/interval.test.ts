@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import useInterval from "./interval";
+import { useInterval } from "../flag-poles";
 jest.useFakeTimers();
 
 describe("useInterval", () => {
