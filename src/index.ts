@@ -1,1 +1,1 @@
-export * from './flag-poles'
+export * from "./flag-poles";
