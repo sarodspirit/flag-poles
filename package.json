@@ -3,6 +3,7 @@
   "version": "1.0.9",
   "author": "Tomas Caraccia",
   "license": "MIT",
+  "repository": "github:sarodspirit/flag-poles",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.es.js",
