@@ -29,8 +29,8 @@ describe("FlagGuard", () => {
     ["hides", "enabled: false", { no_render: { enabled: false } }, null],
     ["hides", "undefined", {}, null],
     ["shows", "enabled: true", { no_render: { enabled: true } }, true],
-  ])("%s a child component when flag is %s", (_, __, flagMap, result) => {
-    render(wrapper({ flag: "no_render", providerValue: { flagMap } }));
+  ])("%s a child component when flag is %s", (_, __, flags, result) => {
+    render(wrapper({ flag: "no_render", providerValue: { flags } }));
     if (!result) {
       return expect(screen.queryByText("Im a flagpole")).toBeFalsy();
     }

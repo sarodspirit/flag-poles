@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Flag, FlagMap } from "./typings";
+import { Flag, flags } from "./typings";
 
 interface FlagContextProps {
-  flagMap: FlagMap;
-  checkFlag: (flagId: string, flagMap: FlagMap) => boolean;
+  flags: flags;
+  apiUrl?: string;
+  checkFlag: (flagId: string, flags: flags) => boolean;
 }
 interface FlagProviderProps {
   children: React.ReactNode;
@@ -23,16 +24,48 @@ interface FlagSwitchProps {
 }
 
 const defaultOptions = {
-  flagMap: {},
-  checkFlag: (flagId: string, flagMap: Record<string, Partial<Flag>>) =>
-    flagMap[flagId]?.enabled,
+  flags: {},
+  checkFlag: (flagId: string, flags: Record<string, Partial<Flag>>) =>
+    flags[flagId]?.enabled,
 };
 export const FlagContext = React.createContext<
   Partial<FlagContextProps> | undefined
 >(undefined);
 export const FlagProvider = ({ value, children }: FlagProviderProps) => {
+  const [state, setState] = React.useState({});
+  React.useEffect(() => {
+    async function fetchFlags(apiUrl) {
+      const operationsDoc = `
+      query flags {
+        flags {
+          uid
+          label
+          enabled
+        }
+      }
+    `;
+      return await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          query: operationsDoc,
+          variables: {},
+          operationName: "flags",
+        }),
+      });
+    }
+    if (value.apiUrl) {
+      fetchFlags(value.apiUrl)
+        .then((response) => response.json())
+        .then(({ data: { flags = [] } }) => {
+          setState(flags.reduce((accum, flag) => (accum[flag.uid] = flag), {}));
+        });
+    }
+    if (value.flags) {
+      setState(value.flags);
+    }
+  }, [state, setState, value]);
   return (
-    <FlagContext.Provider value={{ ...defaultOptions, ...value }}>
+    <FlagContext.Provider value={{ ...defaultOptions, flags: state }}>
       {children}
     </FlagContext.Provider>
   );
@@ -43,10 +76,10 @@ export const FlagGuard: React.FC<FlagGuardProps> = ({ flag, children }) => {
   if (context === undefined) {
     throw new Error("FlagGuard must be used within a FlagProvider");
   }
-  const { checkFlag, flagMap } = context;
-  const checkedFlag = React.useMemo(() => checkFlag(flag, flagMap), [
+  const { checkFlag, flags } = context;
+  const checkedFlag = React.useMemo(() => checkFlag(flag, flags), [
     flag,
-    flagMap,
+    flags,
     checkFlag,
   ]);
   if (checkedFlag) {
@@ -68,10 +101,10 @@ export const FlagSwitch: React.FC<FlagSwitchProps> & FlagSwitchComposition = ({
   if (context === undefined) {
     throw new Error("FlagSwitch needs to be used within a FlagProvider");
   }
-  const { checkFlag, flagMap } = context;
-  const checkedFlag = React.useMemo(() => checkFlag(flag, flagMap), [
+  const { checkFlag, flags } = context;
+  const checkedFlag = React.useMemo(() => checkFlag(flag, flags), [
     flag,
-    flagMap,
+    flags,
     checkFlag,
   ]);
   return (

@@ -58,7 +58,7 @@ import { render } from "react-dom";
 import { FlagProvider, FlagGuard, FlagSwitch } from "flag-poles";
 
 const options = {
-  flagMap: {
+  flags: {
     my_flag: { enabled: false },
     my_flag_switch: { enabled: true },
   },
@@ -98,11 +98,11 @@ import { FlagProvider, FlagGuard, FlagSwitch } from "flag-poles";
 const customLogicFunction = () => true;
 
 const options = {
-  flagMap: {
+  flags: {
     flag1: { enabled: true },
   },
   // This function will apply to all flags.
-  checkFlag: (flag, flagMap) => flagMap[flag].enabled && customLogicFunction(),
+  checkFlag: (flag, flags) => flags[flag].enabled && customLogicFunction(),
 };
 ```
 
