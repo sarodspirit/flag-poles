@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import { FlagGuard, FlagProvider } from "../flag-poles";
 const wrapper = ({ flag, providerValue }) => (
   <FlagProvider value={providerValue}>
@@ -29,15 +29,22 @@ describe("FlagGuard", () => {
     ["hides", "enabled: false", { no_render: { enabled: false } }, null],
     ["hides", "undefined", {}, null],
     ["shows", "enabled: true", { no_render: { enabled: true } }, true],
-  ])("%s a child component when flag is %s", (_, __, flags, result) => {
-    render(wrapper({ flag: "no_render", providerValue: { flags } }));
+  ])("%s a child component when flag is %s", async (_, __, flags, result) => {
+    act(() => {
+      render(wrapper({ flag: "no_render", providerValue: { flags } }));
+    });
     if (!result) {
-      return expect(screen.queryByText("Im a flagpole")).toBeFalsy();
-    }
-    return expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(`
+      await waitFor(() =>
+        expect(screen.queryByText("Im a flagpole")).toBeFalsy()
+      );
+    } else {
+      await waitFor(() =>
+        expect(screen.queryByText("Im a flagpole")).toMatchInlineSnapshot(`
               <div>
                 Im a flagpole
               </div>
-            `);
+            `)
+      );
+    }
   });
 });

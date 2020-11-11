@@ -1,6 +1,6 @@
 import React from "react";
-import { render, screen, act } from "@testing-library/react";
-import { rest } from "msw"; // msw supports graphql too!
+import { render, screen, act, waitFor } from "@testing-library/react";
+import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { FlagGuard, FlagProvider } from "../flag-poles";
 const server = setupServer(
@@ -30,16 +30,20 @@ const wrapper = ({ flag, providerValue }) => (
   </FlagProvider>
 );
 describe("FlagContext", () => {
-  it("loads flags from context object", () => {
-    render(
-      wrapper({
-        flag: "no_render",
-        providerValue: { flags: { no_render: { enabled: true } } },
-      })
-    );
-    expect(screen.queryByText("Im a flagpole")).toBeTruthy();
+  it("loads flags from context object", async () => {
+    act(() => {
+      render(
+        wrapper({
+          flag: "no_render",
+          providerValue: { flags: { no_render: { enabled: true } } },
+        })
+      );
+    });
+    await waitFor(() => {
+      expect(screen.queryByText("Im a flagpole")).toBeTruthy();
+    });
   });
-  it("loads flags from api", () => {
+  it("loads flags from api", async () => {
     act(() => {
       render(
         wrapper({
@@ -48,7 +52,8 @@ describe("FlagContext", () => {
         })
       );
     });
-
-    expect(screen.queryByText("Im a flagpole")).toBeTruthy();
+    await waitFor(() => {
+      expect(screen.queryByText("Im a flagpole")).toBeTruthy();
+    });
   });
 });

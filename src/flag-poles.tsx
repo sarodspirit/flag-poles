@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Flag, flags } from "./typings";
+import { Flag, FlagMap } from "./typings";
 import "isomorphic-fetch";
 interface FlagContextProps {
-  flags: flags;
+  flags: FlagMap;
   apiUrl?: string;
-  checkFlag: (flagId: string, flags: flags) => boolean;
+  checkFlag: (flagId: string, flags: FlagMap) => boolean;
 }
 interface FlagProviderProps {
   children: React.ReactNode;
@@ -41,7 +41,7 @@ const fetchFlags = async (apiUrl) => {
     }
   }
 `;
-  return await fetch(apiUrl, {
+  return fetch(apiUrl, {
     method: "POST",
     body: JSON.stringify({
       query: operationsDoc,
@@ -50,32 +50,33 @@ const fetchFlags = async (apiUrl) => {
     }),
   });
 };
-export const FlagProvider = ({ value, children }: FlagProviderProps) => {
-  const [state, setState] = React.useState({});
+export const useFlags = (value) => {
+  const [flags, setFlags] = React.useState({});
   const isMounted = React.useRef(false);
+  const reduceFlags = (flags) =>
+    flags.reduce((accum, flag) => ({ ...accum, [flag.uid]: flag }), {});
   React.useEffect(() => {
     isMounted.current = true;
-    if (value.flags && isMounted.current) {
-      setState(value.flags);
-      return () => (isMounted.current = false);
+    if (value.flags) {
+      setFlags(value.flags);
     }
     if (value.apiUrl) {
       fetchFlags(value.apiUrl)
         .then((response) => response.json())
         .then(({ data: { flags = [] } }) => {
-          isMounted.current &&
-            setState(
-              flags.reduce(
-                (accum, flag) => ({ ...accum, [flag.uid]: flag }),
-                {}
-              )
-            );
-          return;
+          if (isMounted.current)
+            setFlags({ ...reduceFlags(flags), ...value.flags });
         });
     }
-  }, [state, setState, value]);
+    return () => (isMounted.current = false);
+  }, [flags, setFlags, value]);
+
+  return [flags, setFlags];
+};
+export const FlagProvider = ({ value, children }: FlagProviderProps) => {
+  const [flags] = useFlags(value);
   return (
-    <FlagContext.Provider value={{ ...defaultOptions, flags: state }}>
+    <FlagContext.Provider value={{ ...defaultOptions, flags }}>
       {children}
     </FlagContext.Provider>
   );

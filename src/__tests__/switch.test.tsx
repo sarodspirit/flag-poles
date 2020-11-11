@@ -1,6 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { FlagSwitch, FlagProvider } from "../flag-poles";
+import { act } from "react-test-renderer";
 const wrapper = ({ flag, providerValue, options }) => (
   <FlagProvider value={providerValue}>
     <FlagSwitch flag={flag}>
@@ -44,14 +45,18 @@ describe("FlagSwitch", () => {
       null,
       "Rock Off",
     ],
-  ])("%s branch if render is %s", (_, __, flags, on, off) => {
-    render(
-      wrapper({
-        flag: "no_render",
-        providerValue: { flags },
-        options: { on, off },
-      })
-    );
-    expect(screen.queryByText(on || off).textContent).toEqual(on || off);
+  ])("%s branch if render is %s", async (_, __, flags, on, off) => {
+    act(() => {
+      render(
+        wrapper({
+          flag: "no_render",
+          providerValue: { flags },
+          options: { on, off },
+        })
+      );
+    });
+    await waitFor(() => {
+      expect(screen.queryByText(on || off).textContent).toEqual(on || off);
+    });
   });
 });
