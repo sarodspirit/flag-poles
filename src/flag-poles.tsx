@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Flag, flags } from "./typings";
-
+import "isomorphic-fetch";
 interface FlagContextProps {
   flags: flags;
   apiUrl?: string;
@@ -31,37 +31,47 @@ const defaultOptions = {
 export const FlagContext = React.createContext<
   Partial<FlagContextProps> | undefined
 >(undefined);
+const fetchFlags = async (apiUrl) => {
+  const operationsDoc = `
+  query flags {
+    flags {
+      uid
+      label
+      enabled
+    }
+  }
+`;
+  return await fetch(apiUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      query: operationsDoc,
+      variables: {},
+      operationName: "flags",
+    }),
+  });
+};
 export const FlagProvider = ({ value, children }: FlagProviderProps) => {
   const [state, setState] = React.useState({});
+  const isMounted = React.useRef(false);
   React.useEffect(() => {
-    async function fetchFlags(apiUrl) {
-      const operationsDoc = `
-      query flags {
-        flags {
-          uid
-          label
-          enabled
-        }
-      }
-    `;
-      return await fetch(apiUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          query: operationsDoc,
-          variables: {},
-          operationName: "flags",
-        }),
-      });
+    isMounted.current = true;
+    if (value.flags && isMounted.current) {
+      setState(value.flags);
+      return () => (isMounted.current = false);
     }
     if (value.apiUrl) {
       fetchFlags(value.apiUrl)
         .then((response) => response.json())
         .then(({ data: { flags = [] } }) => {
-          setState(flags.reduce((accum, flag) => (accum[flag.uid] = flag), {}));
+          isMounted.current &&
+            setState(
+              flags.reduce(
+                (accum, flag) => ({ ...accum, [flag.uid]: flag }),
+                {}
+              )
+            );
+          return;
         });
-    }
-    if (value.flags) {
-      setState(value.flags);
     }
   }, [state, setState, value]);
   return (
