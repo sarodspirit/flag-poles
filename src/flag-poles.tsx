@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Flag, FlagMap } from "./typings";
 import "isomorphic-fetch";
+
+import { Flag, FlagMap } from "./typings";
 interface FlagContextProps {
-  flags: FlagMap;
+  flags?: FlagMap;
   apiUrl?: string;
   checkFlag: (flagId: string, flags: FlagMap) => boolean;
 }
@@ -50,7 +51,10 @@ const fetchFlags = async (apiUrl) => {
     }),
   });
 };
-export const useFlags = (value) => {
+
+export const useFlags = (
+  value: FlagContextProps
+): [FlagMap, React.Dispatch<React.SetStateAction<FlagMap>>] => {
   const [flags, setFlags] = React.useState({});
   const isMounted = React.useRef(false);
   const reduceFlags = (flags) =>
@@ -73,7 +77,10 @@ export const useFlags = (value) => {
 
   return [flags, setFlags];
 };
-export const FlagProvider = ({ value, children }: FlagProviderProps) => {
+export const FlagProvider: React.FC = ({
+  value,
+  children,
+}: FlagProviderProps) => {
   const [flags] = useFlags(value);
   return (
     <FlagContext.Provider value={{ ...defaultOptions, flags }}>
